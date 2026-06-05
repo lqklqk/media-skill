@@ -1,0 +1,75 @@
+providers:
+  # OpenAI 示例
+  - name: openai
+    api_key: "${OPENAI_API_KEY}"
+    base_url: https://api.openai.com/v1
+    models:
+      # 生图模型
+      - name: dall-e-3
+        type: image_generate
+        params: { size: "1024x1024" }
+      # 图片/视频理解模型
+      - name: gpt-4o
+        type: image_understand
+        max_tokens: 4096
+      # 如果有视频理解模型，取消注释
+      # - name: gpt-4o
+      #   type: video_understand
+      #   max_tokens: 4096
+
+  # 通义万相（阿里 Dashscope）示例
+  # - name: aliyun
+  #   api_key: "${ALIYUN_API_KEY}"
+  #   base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+  #   models:
+  #     # 生图
+  #     - name: wanx-v1
+  #       type: image_generate
+  #     # 生视频（OpenAI 兼容模式）
+  #     - name: wanx-video
+  #       type: video_generate
+  #       params: { duration: 5, resolution: "1080p" }
+
+  # Agnes 示例（自定义 endpoint + 异步轮询）
+  # - name: agnes
+  #   api_key: "${AGNES_API_KEY}"
+  #   base_url: https://apihub.agnes-ai.com/v1
+  #   models:
+  #     # 生图（OpenAI 兼容模式）
+  #     - name: agnes-image-2.1-flash
+  #       type: image_generate
+  #     # 生视频（异步轮询模式）
+  #     - name: agnes-video-v2.0
+  #       type: video_generate
+  #       params:
+  #         endpoint: /videos        # 覆盖默认 /videos/generations
+  #         poll: true               # 启用异步轮询
+  #         poll_interval: 2         # 轮询间隔（秒）
+
+  # 智谱示例
+  # - name: zhipu
+  #   api_key: "${ZHIPU_API_KEY}"
+  #   base_url: https://open.bigmodel.cn/api/paas/v4
+  #   models:
+  #     # 生图
+  #     - name: glm-4v
+  #       type: image_generate
+  #     # 理解
+  #     - name: glm-4v
+  #       type: image_understand
+  #       max_tokens: 4096
+
+  # Anthropic 示例（仅理解，不支持生图/视频）
+  # - name: anthropic
+  #   api_key: "${ANTHROPIC_API_KEY}"
+  #   base_url: https://api.anthropic.com
+  #   models:
+  #     - name: claude-sonnet-4-20250514
+  #       type: image_understand
+  #       max_tokens: 4096
+
+defaults:
+  image_generate: openai/dall-e-3
+  # video_generate: aliyun/wanx-video       # 取消注释并填入你的默认视频生成模型
+  # image_understand: openai/gpt-4o
+  # video_understand: openai/gpt-4o         # 取消注释并填入你的默认视频理解模型
